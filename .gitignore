@@ -1,0 +1,8 @@
+*.iml
+node_modules/*
+
+coverage/
+
+\.nyc_output/
+
+/memory_usage.csv
