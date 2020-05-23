@@ -6,6 +6,8 @@ const toobusy = require('toobusy-js');
 const ObjectsToCsv = require('objects-to-csv');
 const app = express();
 const grpcService = require('./grpc/grpc_tested_service');
+const testRoute = require('./route/test_route');
+const bodyParser = require('body-parser');
 
 process.on('uncaughtException', (err) => {
     log.error(`UncaughtException: ${err.message}`);
@@ -30,6 +32,13 @@ async function main() {
     }, 60000);
 
     grpcService.start();
+
+    app.use(bodyParser.json());
+    app.disable('x-powered-by');
+
+    app.use('/v1/test', testRoute);
+
+    app.listen(8210, () => log.info('Service started on port 8210'));
 }
 
 main();
